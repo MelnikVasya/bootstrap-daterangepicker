@@ -229,6 +229,14 @@
   margin-bottom: 0;
 }
 
+.daterangepicker select.hourselect {
+  margin: 0 15px 0 10px;
+}
+
+.daterangepicker select.minuteselect {
+  margin-left: 10px;
+}
+
 .daterangepicker th.month {
   width: auto;
 }
@@ -269,7 +277,6 @@
   margin: 5px auto;
   line-height: 30px;
   position: relative;
-  padding-left: 28px;
 }
 
 .daterangepicker .calendar-time select.disabled {
@@ -284,6 +291,7 @@
   float: none;
   margin: 4px;
   text-align: left;
+  clear: both;
 }
 
 .daterangepicker .ranges ul {

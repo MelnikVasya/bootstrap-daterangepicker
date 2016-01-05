@@ -4,6 +4,7 @@
 * @copyright: Copyright (c) 2012-2015 Dan Grossman. All rights reserved.
 * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
 * @website: https://www.improvely.com/
+* plugin changed: See https://github.com/MelnikVasya/bootstrap-daterangepicker
 */
 
 (function(root, factory) {
@@ -77,7 +78,9 @@
             customRangeLabel: 'Custom Range',
             daysOfWeek: moment.weekdaysMin(),
             monthNames: moment.monthsShort(),
-            firstDay: moment.localeData().firstDayOfWeek()
+            firstDay: moment.localeData().firstDayOfWeek(),
+            hour: 'Hour',
+            minute: 'Minute'
         };
 
         this.callback = function() { };
@@ -104,7 +107,6 @@
                       '<i class="fa fa-calendar glyphicon glyphicon-calendar"></i>' +
                       '<div class="calendar-time">' +
                         '<div></div>' +
-                        '<i class="fa fa-clock-o glyphicon glyphicon-time"></i>' +
                       '</div>' +
                     '</div>' +
                     '<div class="calendar-table"></div>' +
@@ -115,7 +117,6 @@
                       '<i class="fa fa-calendar glyphicon glyphicon-calendar"></i>' +
                       '<div class="calendar-time">' +
                         '<div></div>' +
-                        '<i class="fa fa-clock-o glyphicon glyphicon-time"></i>' +
                       '</div>' +
                     '</div>' +
                     '<div class="calendar-table"></div>' +
@@ -163,6 +164,12 @@
 
             if (typeof options.locale.customRangeLabel === 'string')
               this.locale.customRangeLabel = options.locale.customRangeLabel;
+
+            if (typeof options.locale.hour === 'string')
+                this.locale.hour = options.locale.hour;
+
+            if (typeof options.locale.minute === 'string')
+                this.locale.minute = options.locale.minute;
 
         }
 
@@ -316,7 +323,7 @@
                 // after the maximum, don't display this range option at all.
                 if ((this.minDate && end.isBefore(this.minDate)) || (maxDate && start.isAfter(maxDate)))
                     continue;
-                
+
                 //Support unicode chars in the range names.
                 var elem = document.createElement('textarea');
                 elem.innerHTML = range;
@@ -540,7 +547,7 @@
                 } else {
                     this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'month');
                 }
-                
+
             } else {
                 if (this.leftCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM') && this.rightCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM')) {
                     this.leftCalendar.month = this.startDate.clone().date(2);
@@ -877,8 +884,7 @@
             //
             // hours
             //
-
-            html = '<select class="hourselect">';
+            html = this.locale.hour + ': <select class="hourselect">';
 
             var start = this.timePicker24Hour ? 0 : 1;
             var end = this.timePicker24Hour ? 23 : 12;
@@ -910,7 +916,7 @@
             // minutes
             //
 
-            html += ': <select class="minuteselect">';
+            html += this.locale.minute + ': <select class="minuteselect">';
 
             for (var i = 0; i < 60; i += this.timePickerIncrement) {
                 var padded = i < 10 ? '0' + i : i;
@@ -1167,7 +1173,7 @@
                 this.container.find('input[name=daterangepicker_start]').val(dates[0].format(this.locale.format));
                 this.container.find('input[name=daterangepicker_end]').val(dates[1].format(this.locale.format));
             }
-            
+
         },
 
         clickRange: function(e) {
@@ -1298,7 +1304,7 @@
                 this.endDate = null;
                 this.setStartDate(date.clone());
             } else if (!this.endDate && date.isBefore(this.startDate)) {
-                //special case: clicking the same date for start/end, 
+                //special case: clicking the same date for start/end,
                 //but the time of the end date is before the start date
                 this.setEndDate(this.startDate.clone());
             } else {
@@ -1520,7 +1526,7 @@
         });
         return this;
     };
-    
+
     return DateRangePicker;
 
 }));
