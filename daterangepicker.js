@@ -872,8 +872,12 @@
                             selected.hour(0);
                     }
 
-                    if (selected.isBefore(this.startDate))
-                        selected = this.startDate.clone();
+                    if (selected.isBefore(this.startDate)) {
+                        var previousSelected = selected.clone();
+                        selected = this.startDate.clone().hour(previousSelected.hour())
+                                                         .minute(previousSelected.minute())
+                                                         .second(previousSelected.second());
+                    }
 
                     if (selected.isAfter(maxDate))
                         selected = maxDate.clone();
